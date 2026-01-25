@@ -69,6 +69,12 @@ class SmartBeerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             # Build data dict with all refrigerator states
             data: dict[str, Any] = {}
             for refrigerator in self.refrigerators:
+                # Helper to convert string "0"/"1" to boolean
+                def str_to_bool(value: str | None) -> bool | None:
+                    if value is None:
+                        return None
+                    return str(value) == "1"
+                
                 # Basic data from Refrigerator class methods
                 basic_data = {
                     "temp": refrigerator.get_offset_temp(),
@@ -89,12 +95,12 @@ class SmartBeerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 basic_data["volume"] = refrigerator._get_attribute("lkVolume")
                 basic_data["weight_delta"] = refrigerator._get_attribute("lkDelta")
                 
-                # Door status
-                basic_data["door_open"] = refrigerator._get_attribute("Refrigerator_OpStatusDoorOpen")
-                basic_data["door_alarm"] = refrigerator._get_attribute("Sys_AlertStatusDoorOpenAlarm")
+                # Door status (convert "0"/"1" strings to boolean)
+                basic_data["door_open"] = str_to_bool(refrigerator._get_attribute("Refrigerator_OpStatusDoorOpen"))
+                basic_data["door_alarm"] = str_to_bool(refrigerator._get_attribute("Sys_AlertStatusDoorOpenAlarm"))
                 
-                # Power/System status
-                basic_data["power_outage"] = refrigerator._get_attribute("XCat_PowerStatusPowerOutage")
+                # Power/System status (convert "0"/"1" strings to boolean)
+                basic_data["power_outage"] = str_to_bool(refrigerator._get_attribute("XCat_PowerStatusPowerOutage"))
                 basic_data["system_state"] = refrigerator._get_attribute("Sys_OpStatusState")
                 basic_data["fault_code"] = refrigerator._get_attribute("Sys_AlertStatusCustomerFaultCode")
                 
@@ -108,6 +114,15 @@ class SmartBeerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 basic_data["serial_number"] = refrigerator._get_attribute("SerialNumber")
                 basic_data["wifi_version"] = refrigerator._get_attribute("ISP_WIFI_VERSION")
                 basic_data["mac_address"] = refrigerator._get_attribute("MAC_Address")
+                
+                # Raw attributes for debugging (all available attributes)
+                basic_data["raw_attributes"] = {}
+                if hasattr(refrigerator, '_data_dict') and refrigerator._data_dict:
+                    for key, value in refrigerator._data_dict.items():
+                        if isinstance(value, dict) and 'value' in value:
+                            basic_data["raw_attributes"][key] = value.get('value')
+                        else:
+                            basic_data["raw_attributes"][key] = value
                 
                 data[refrigerator.said] = basic_data
             

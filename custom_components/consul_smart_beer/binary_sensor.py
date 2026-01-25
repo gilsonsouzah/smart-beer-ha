@@ -97,6 +97,17 @@ class SmartBeerBinarySensorEntity(SmartBeerEntity, BinarySensorEntity):
         self._attr_unique_id = f"{refrigerator.said}_{description.key}"
 
     @property
+    def extra_state_attributes(self) -> dict[str, Any] | None:
+        """Return extra state attributes for debugging."""
+        # Only add raw attributes to the online/connectivity sensor
+        if self.entity_description.key == "online":
+            data = self.coordinator.data.get(self._refrigerator.said, {})
+            raw_attrs = data.get("raw_attributes", {})
+            if raw_attrs:
+                return {"raw_api_data": raw_attrs}
+        return None
+
+    @property
     def is_on(self) -> bool | None:
         """Return True if the binary sensor is on."""
         data = self.coordinator.data.get(self._refrigerator.said, {})
