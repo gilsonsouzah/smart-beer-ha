@@ -1,0 +1,7 @@
+# Requirements for development
+whirlpool-sixth-sense>=1.0.0
+homeassistant>=2024.1.0
+pytest>=7.0
+pytest-asyncio>=0.21
+pytest-cov>=4.0
+pytest-homeassistant-custom-component>=0.13

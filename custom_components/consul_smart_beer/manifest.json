@@ -1,0 +1,12 @@
+{
+  "domain": "consul_smart_beer",
+  "name": "Consul Smart Beer",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/your-repo/consul-smart-beer-ha",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/your-repo/consul-smart-beer-ha/issues",
+  "requirements": ["whirlpool-sixth-sense>=1.0.0"],
+  "version": "1.0.0"
+}

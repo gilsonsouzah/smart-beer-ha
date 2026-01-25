@@ -1,0 +1,52 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Consul Smart Beer",
+        "description": "Configure sua conta Consul Smart Beer",
+        "data": {
+          "username": "Email",
+          "password": "Senha"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Falha ao conectar aos servidores da Consul",
+      "invalid_auth": "Email ou senha inválidos",
+      "account_locked": "Conta bloqueada. Por favor, tente novamente mais tarde.",
+      "no_appliances": "Nenhum aparelho Smart Beer encontrado na sua conta",
+      "unknown": "Ocorreu um erro inesperado"
+    },
+    "abort": {
+      "already_configured": "Esta conta já está configurada"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "temperature": {
+        "name": "Temperatura"
+      },
+      "connection_status": {
+        "name": "Status da Conexão"
+      }
+    },
+    "switch": {
+      "turbo_mode": {
+        "name": "Modo Turbo"
+      },
+      "display_lock": {
+        "name": "Bloqueio do Display"
+      }
+    },
+    "number": {
+      "target_temperature": {
+        "name": "Temperatura Alvo"
+      }
+    },
+    "binary_sensor": {
+      "online": {
+        "name": "Online"
+      }
+    }
+  }
+}

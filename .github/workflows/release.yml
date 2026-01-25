@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Update manifest version
+        run: |
+          sed -i 's/"version": "[^"]*"/"version": "${{ steps.get_version.outputs.VERSION }}"/' custom_components/consul_smart_beer/manifest.json
+
+      - name: Create release zip
+        run: |
+          cd custom_components
+          zip -r ../consul_smart_beer.zip consul_smart_beer
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: v${{ steps.get_version.outputs.VERSION }}
+          body: |
+            ## Consul Smart Beer v${{ steps.get_version.outputs.VERSION }}
+
+            ### Installation
+
+            #### HACS (Recommended)
+            1. Add this repository as a custom repository in HACS
+            2. Search for "Consul Smart Beer" and install
+            3. Restart Home Assistant
+
+            #### Manual
+            1. Download `consul_smart_beer.zip`
+            2. Extract to `config/custom_components/`
+            3. Restart Home Assistant
+          files: |
+            consul_smart_beer.zip
+          generate_release_notes: true
