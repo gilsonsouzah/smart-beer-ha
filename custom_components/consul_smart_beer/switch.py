@@ -27,9 +27,9 @@ class SmartBeerSwitchEntityDescription(SwitchEntityDescription):
 
 SWITCH_DESCRIPTIONS: tuple[SmartBeerSwitchEntityDescription, ...] = (
     SmartBeerSwitchEntityDescription(
-        key="turbo_mode",
-        translation_key="turbo_mode",
-        icon="mdi:snowflake-alert",
+        key="happy_hour",
+        translation_key="happy_hour",
+        icon="mdi:party-popper",
         value_fn=lambda data: data.get("turbo_mode"),
         turn_on_fn=lambda r: r.set_turbo_mode(True),
         turn_off_fn=lambda r: r.set_turbo_mode(False),

@@ -31,14 +31,14 @@
       }
     },
     "switch": {
-      "turbo_mode": {
-        "name": "Turbo Mode"
+      "happy_hour": {
+        "name": "Happy Hour"
       },
       "display_lock": {
         "name": "Display Lock"
       }
     },
-    "number": {
+    "select": {
       "target_temperature": {
         "name": "Target Temperature"
       }

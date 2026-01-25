@@ -28,7 +28,7 @@ PLATFORMS: list[Platform] = [
     Platform.SENSOR,
     Platform.BINARY_SENSOR,
     Platform.SWITCH,
-    Platform.NUMBER,
+    Platform.SELECT,
 ]
 
 
@@ -69,7 +69,8 @@ class SmartBeerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             # Build data dict with all refrigerator states
             data: dict[str, Any] = {}
             for refrigerator in self.refrigerators:
-                data[refrigerator.said] = {
+                # Basic data from Refrigerator class methods
+                basic_data = {
                     "temp": refrigerator.get_offset_temp(),
                     "temp_raw": refrigerator.get_temp(),
                     "turbo_mode": refrigerator.get_turbo_mode(),
@@ -78,6 +79,37 @@ class SmartBeerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     "name": refrigerator.name,
                     "said": refrigerator.said,
                 }
+                
+                # Extended data - access raw attributes directly
+                # Content sensors (Smart Beer specific - "lk" = Lifekeeper)
+                basic_data["weight"] = refrigerator._get_attribute("lkWeight")
+                basic_data["cans"] = refrigerator._get_attribute("lkCans")
+                basic_data["longnecks"] = refrigerator._get_attribute("lkLongneck")
+                basic_data["bottles"] = refrigerator._get_attribute("lkBottles")
+                basic_data["volume"] = refrigerator._get_attribute("lkVolume")
+                basic_data["weight_delta"] = refrigerator._get_attribute("lkDelta")
+                
+                # Door status
+                basic_data["door_open"] = refrigerator._get_attribute("Refrigerator_OpStatusDoorOpen")
+                basic_data["door_alarm"] = refrigerator._get_attribute("Sys_AlertStatusDoorOpenAlarm")
+                
+                # Power/System status
+                basic_data["power_outage"] = refrigerator._get_attribute("XCat_PowerStatusPowerOutage")
+                basic_data["system_state"] = refrigerator._get_attribute("Sys_OpStatusState")
+                basic_data["fault_code"] = refrigerator._get_attribute("Sys_AlertStatusCustomerFaultCode")
+                
+                # Diagnostics
+                basic_data["running_hours"] = refrigerator._get_attribute("XCat_OdometerStatusRunningHours")
+                basic_data["total_hours"] = refrigerator._get_attribute("XCat_OdometerStatusTotalHours")
+                basic_data["wifi_rssi"] = refrigerator._get_attribute("XCat_WifiStatusRssiAntennaDiversity")
+                
+                # Device info
+                basic_data["model_number"] = refrigerator._get_attribute("ModelNumber")
+                basic_data["serial_number"] = refrigerator._get_attribute("SerialNumber")
+                basic_data["wifi_version"] = refrigerator._get_attribute("ISP_WIFI_VERSION")
+                basic_data["mac_address"] = refrigerator._get_attribute("MAC_Address")
+                
+                data[refrigerator.said] = basic_data
             
             return data
             

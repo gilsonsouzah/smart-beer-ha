@@ -13,6 +13,7 @@ from homeassistant.components.binary_sensor import (
     BinarySensorEntity,
     BinarySensorEntityDescription,
 )
+from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
@@ -33,6 +34,29 @@ BINARY_SENSOR_DESCRIPTIONS: tuple[SmartBeerBinarySensorEntityDescription, ...] =
         translation_key="online",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
         value_fn=lambda data: data.get("online"),
+    ),
+    SmartBeerBinarySensorEntityDescription(
+        key="door_open",
+        translation_key="door_open",
+        device_class=BinarySensorDeviceClass.DOOR,
+        icon="mdi:door",
+        value_fn=lambda data: data.get("door_open"),
+    ),
+    SmartBeerBinarySensorEntityDescription(
+        key="door_alarm",
+        translation_key="door_alarm",
+        device_class=BinarySensorDeviceClass.PROBLEM,
+        icon="mdi:door-open",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda data: data.get("door_alarm"),
+    ),
+    SmartBeerBinarySensorEntityDescription(
+        key="power_outage",
+        translation_key="power_outage",
+        device_class=BinarySensorDeviceClass.PROBLEM,
+        icon="mdi:power-plug-off",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda data: data.get("power_outage"),
     ),
 )
 

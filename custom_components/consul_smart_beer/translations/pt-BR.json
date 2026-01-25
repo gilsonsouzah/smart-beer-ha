@@ -26,19 +26,37 @@
       "temperature": {
         "name": "Temperatura"
       },
-      "connection_status": {
-        "name": "Status da Conexão"
+      "weight": {
+        "name": "Peso do Conteúdo"
+      },
+      "cans": {
+        "name": "Quantidade de Latas"
+      },
+      "longnecks": {
+        "name": "Quantidade de Long Necks"
+      },
+      "bottles": {
+        "name": "Quantidade de Garrafas"
+      },
+      "volume": {
+        "name": "Volume do Conteúdo"
+      },
+      "running_hours": {
+        "name": "Horas em Funcionamento"
+      },
+      "wifi_rssi": {
+        "name": "Sinal WiFi"
       }
     },
     "switch": {
-      "turbo_mode": {
-        "name": "Modo Turbo"
+      "happy_hour": {
+        "name": "Happy Hour"
       },
       "display_lock": {
         "name": "Bloqueio do Display"
       }
     },
-    "number": {
+    "select": {
       "target_temperature": {
         "name": "Temperatura Alvo"
       }
@@ -46,6 +64,15 @@
     "binary_sensor": {
       "online": {
         "name": "Online"
+      },
+      "door_open": {
+        "name": "Porta"
+      },
+      "door_alarm": {
+        "name": "Alarme da Porta"
+      },
+      "power_outage": {
+        "name": "Queda de Energia"
       }
     }
   }

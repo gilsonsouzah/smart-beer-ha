@@ -47,12 +47,17 @@ After configuration, the following entities will be created for each Smart Beer 
 
 ### Switches
 
-- **Turbo Mode**: Enable/disable rapid cooling
+- **Happy Hour**: Enable/disable rapid cooling
 - **Display Lock**: Lock/unlock the physical controls
 
-### Numbers
+### Selects
 
-- **Target Temperature**: Set the desired temperature (-4°C to 5°C)
+- **Target Temperature**: Set the desired temperature with the following options:
+  - -4°C (Mais gelado)
+  - -2°C
+  - 0°C
+  - 3°C
+  - 5°C (Menos gelado)
 
 ## Temperature Settings
 

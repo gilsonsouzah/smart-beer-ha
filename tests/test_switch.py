@@ -36,36 +36,36 @@ def test_switch_descriptions():
     """Test switch descriptions are defined correctly."""
     assert len(SWITCH_DESCRIPTIONS) == 2
     
-    turbo_switch = next(s for s in SWITCH_DESCRIPTIONS if s.key == "turbo_mode")
-    assert turbo_switch.icon == "mdi:snowflake-alert"
+    happy_hour_switch = next(s for s in SWITCH_DESCRIPTIONS if s.key == "happy_hour")
+    assert happy_hour_switch.icon == "mdi:party-popper"
     
     lock_switch = next(s for s in SWITCH_DESCRIPTIONS if s.key == "display_lock")
     assert lock_switch.icon == "mdi:lock"
 
 
-def test_turbo_mode_switch_off(coordinator, mock_refrigerator):
-    """Test turbo mode switch shows off state."""
-    description = next(s for s in SWITCH_DESCRIPTIONS if s.key == "turbo_mode")
+def test_happy_hour_switch_off(coordinator, mock_refrigerator):
+    """Test happy hour switch shows off state."""
+    description = next(s for s in SWITCH_DESCRIPTIONS if s.key == "happy_hour")
     
     switch = SmartBeerSwitchEntity(coordinator, mock_refrigerator, description)
     
     assert switch.is_on is False
-    assert switch.unique_id == "TEST_SAID_12345_turbo_mode"
+    assert switch.unique_id == "TEST_SAID_12345_happy_hour"
 
 
-def test_turbo_mode_switch_on(coordinator, mock_refrigerator):
-    """Test turbo mode switch shows on state."""
+def test_happy_hour_switch_on(coordinator, mock_refrigerator):
+    """Test happy hour switch shows on state."""
     coordinator.data["TEST_SAID_12345"]["turbo_mode"] = True
-    description = next(s for s in SWITCH_DESCRIPTIONS if s.key == "turbo_mode")
+    description = next(s for s in SWITCH_DESCRIPTIONS if s.key == "happy_hour")
     
     switch = SmartBeerSwitchEntity(coordinator, mock_refrigerator, description)
     
     assert switch.is_on is True
 
 
-async def test_turn_on_turbo_mode(coordinator, mock_refrigerator):
-    """Test turning on turbo mode."""
-    description = next(s for s in SWITCH_DESCRIPTIONS if s.key == "turbo_mode")
+async def test_turn_on_happy_hour(coordinator, mock_refrigerator):
+    """Test turning on happy hour."""
+    description = next(s for s in SWITCH_DESCRIPTIONS if s.key == "happy_hour")
     switch = SmartBeerSwitchEntity(coordinator, mock_refrigerator, description)
     
     await switch.async_turn_on()
@@ -74,9 +74,9 @@ async def test_turn_on_turbo_mode(coordinator, mock_refrigerator):
     coordinator.async_request_refresh.assert_called_once()
 
 
-async def test_turn_off_turbo_mode(coordinator, mock_refrigerator):
-    """Test turning off turbo mode."""
-    description = next(s for s in SWITCH_DESCRIPTIONS if s.key == "turbo_mode")
+async def test_turn_off_happy_hour(coordinator, mock_refrigerator):
+    """Test turning off happy hour."""
+    description = next(s for s in SWITCH_DESCRIPTIONS if s.key == "happy_hour")
     switch = SmartBeerSwitchEntity(coordinator, mock_refrigerator, description)
     
     await switch.async_turn_off()
