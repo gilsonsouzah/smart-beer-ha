@@ -78,7 +78,7 @@ SENSOR_DESCRIPTIONS: tuple[SmartBeerSensorEntityDescription, ...] = (
     SmartBeerSensorEntityDescription(
         key="cans",
         translation_key="cans",
-        icon="mdi:can",
+        icon="mdi:beer",
         state_class=SensorStateClass.MEASUREMENT,
         value_fn=lambda data: _parse_int(data.get("cans")),
     ),
