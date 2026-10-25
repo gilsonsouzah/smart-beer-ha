@@ -63,9 +63,9 @@ async def test_coordinator_update_account_locked(coordinator, mock_auth):
         await coordinator._async_update_data()
 
 
-async def test_coordinator_update_connection_error(coordinator, mock_appliances_manager):
+async def test_coordinator_update_connection_error(coordinator, mock_refrigerator):
     """Test coordinator handles connection error."""
-    mock_appliances_manager.fetch_all_data = AsyncMock(
+    mock_refrigerator.fetch_data = AsyncMock(
         side_effect=aiohttp.ClientError("Connection failed")
     )
     
@@ -73,9 +73,9 @@ async def test_coordinator_update_connection_error(coordinator, mock_appliances_
         await coordinator._async_update_data()
 
 
-async def test_coordinator_update_unexpected_error(coordinator, mock_appliances_manager):
+async def test_coordinator_update_unexpected_error(coordinator, mock_refrigerator):
     """Test coordinator handles unexpected error."""
-    mock_appliances_manager.fetch_all_data = AsyncMock(
+    mock_refrigerator.fetch_data = AsyncMock(
         side_effect=ValueError("Unexpected error")
     )
     

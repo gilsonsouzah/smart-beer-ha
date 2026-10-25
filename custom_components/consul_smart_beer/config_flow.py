@@ -64,13 +64,16 @@ async def validate_input(
     # Try to fetch appliances to verify account has Smart Beer devices
     try:
         appliances_manager = AppliancesManager(backend_selector, auth, session)
-        await appliances_manager.fetch_appliances()
+        if not await appliances_manager.connect():
+            return "cannot_connect", None
+        refrigerators = list(appliances_manager.refrigerators)
+        await appliances_manager.disconnect()
         
         # Check for refrigerators (Smart Beer is a TED refrigerator)
-        if not appliances_manager.refrigerators:
+        if not refrigerators:
             return "no_appliances", None
             
-        return None, appliances_manager.refrigerators
+        return None, refrigerators
         
     except aiohttp.ClientError:
         return "cannot_connect", None

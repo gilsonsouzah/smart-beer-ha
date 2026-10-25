@@ -64,7 +64,8 @@ class SmartBeerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 await self.auth.do_auth()
                 
             # Fetch data for all appliances
-            await self.appliances_manager.fetch_all_data()
+            for refrigerator in self.refrigerators:
+                await refrigerator.fetch_data()
             
             # Build data dict with all refrigerator states
             data: dict[str, Any] = {}
@@ -166,23 +167,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: SmartBeerConfigEntry) ->
     if not auth.is_access_token_valid():
         raise ConfigEntryAuthFailed("Invalid credentials")
     
-    # Create appliances manager and fetch appliances
+    # Create appliances manager; connect() fetches appliances and starts the event listener
     appliances_manager = AppliancesManager(backend_selector, auth, session)
     
     try:
-        if not await appliances_manager.fetch_appliances():
+        if not await appliances_manager.connect():
             raise ConfigEntryNotReady("Failed to fetch appliances")
     except aiohttp.ClientError as err:
         raise ConfigEntryNotReady("Cannot connect to Consul servers") from err
     
     if not appliances_manager.refrigerators:
         _LOGGER.warning("No Smart Beer appliances found")
-    
-    # Connect to event socket for real-time updates
-    try:
-        await appliances_manager.connect()
-    except Exception as err:
-        _LOGGER.warning("Could not connect to event socket: %s", err)
     
     # Create coordinator
     coordinator = SmartBeerCoordinator(hass, appliances_manager, auth)

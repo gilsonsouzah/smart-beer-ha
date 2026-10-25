@@ -3,8 +3,14 @@
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from whirlpool.refrigerator import Refrigerator
+from whirlpool.httpapi.refrigerator import Refrigerator
 from whirlpool.types import ApplianceInfo
+
+
+@pytest.fixture(autouse=True)
+def auto_enable_custom_integrations(enable_custom_integrations):
+    """Enable loading custom integrations in all tests."""
+    yield
 
 
 @pytest.fixture
@@ -16,7 +22,6 @@ def mock_refrigerator():
     refrigerator.appliance_info = ApplianceInfo(
         said="TEST_SAID_12345",
         name="Smart Beer Test",
-        data_model="ddm_ted_refrigerator_v12",
         category="Refrigerator",
         model_number="CZD12AT",
         serial_number="SN123456789",
@@ -38,9 +43,7 @@ def mock_appliances_manager(mock_refrigerator):
     """Create a mock appliances manager."""
     manager = MagicMock()
     manager.refrigerators = [mock_refrigerator]
-    manager.fetch_appliances = AsyncMock(return_value=True)
-    manager.fetch_all_data = AsyncMock()
-    manager.connect = AsyncMock()
+    manager.connect = AsyncMock(return_value=True)
     manager.disconnect = AsyncMock()
     return manager
 

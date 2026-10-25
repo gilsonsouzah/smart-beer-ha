@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "consul-smart-beer-ha"
-version = "1.0.0"
+version = "1.2.0"
 description = "Home Assistant custom integration for Consul Smart Beer"
 readme = "README.md"
 license = {text = "MIT"}
@@ -22,7 +22,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-    "whirlpool-sixth-sense>=1.0.0",
+    "whirlpool-sixth-sense>=2.1.0",
 ]
 
 [project.optional-dependencies]

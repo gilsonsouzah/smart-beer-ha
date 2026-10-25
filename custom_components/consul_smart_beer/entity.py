@@ -29,8 +29,8 @@ class SmartBeerEntity(CoordinatorEntity[SmartBeerCoordinator]):
             name=refrigerator.name or "Smart Beer",
             manufacturer="Consul",
             model="Smart Beer",
-            serial_number=refrigerator.appliance_info.serial_number,
-            sw_version=refrigerator.appliance_info.data_model,
+            model_id=refrigerator.appliance_info.model_number or None,
+            serial_number=refrigerator.appliance_info.serial_number or None,
         )
 
     @property

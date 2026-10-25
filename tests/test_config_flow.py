@@ -51,7 +51,8 @@ def mock_auth_failure():
 def mock_no_appliances(mock_auth):
     """Mock no appliances found."""
     mock_manager = MagicMock()
-    mock_manager.fetch_appliances = AsyncMock(return_value=True)
+    mock_manager.connect = AsyncMock(return_value=True)
+    mock_manager.disconnect = AsyncMock()
     mock_manager.refrigerators = []
     
     with patch(
