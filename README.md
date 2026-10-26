@@ -1,5 +1,7 @@
 # Consul Smart Beer - Home Assistant Integration
 
+<img src="https://raw.githubusercontent.com/gilsonsouzah/smart-beer-ha/main/custom_components/consul_smart_beer/brand/icon.png" alt="Consul Smart Beer" width="128">
+
 Custom Home Assistant integration for the **Consul Smart Beer** (cervejeira inteligente) using the Whirlpool Sixth Sense API.
 
 ## Features
