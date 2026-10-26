@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "consul-smart-beer-ha"
-version = "1.2.3"
+version = "1.2.4"
 description = "Home Assistant custom integration for Consul Smart Beer"
 readme = "README.md"
 license = {text = "MIT"}

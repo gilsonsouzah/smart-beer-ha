@@ -8,5 +8,5 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/gilsonsouzah/smart-beer-ha/issues",
   "requirements": ["whirlpool-sixth-sense>=2.0.0"],
-  "version": "1.2.3"
+  "version": "1.2.4"
 }
