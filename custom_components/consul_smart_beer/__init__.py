@@ -7,7 +7,9 @@ from datetime import timedelta
 from typing import Any
 
 import aiohttp
-from whirlpool.appliancesmanager import AppliancesManager
+# Smart Beer only uses the HTTP API; the combined manager would also try AWS IoT,
+# which fails (and logs errors) on accounts without AWS IoT appliances.
+from whirlpool.httpapi.appliancesmanager import AppliancesManager
 from whirlpool.auth import AccountLockedError, Auth
 from whirlpool.backendselector import BackendSelector
 from whirlpool.refrigerator import Refrigerator
@@ -168,7 +170,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: SmartBeerConfigEntry) ->
         raise ConfigEntryAuthFailed("Invalid credentials")
     
     # Create appliances manager; connect() fetches appliances and starts the event listener
-    appliances_manager = AppliancesManager(backend_selector, auth, session)
+    appliances_manager = AppliancesManager(backend_selector, auth, session, lambda: None)
     
     try:
         if not await appliances_manager.connect():

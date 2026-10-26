@@ -7,7 +7,9 @@ from typing import Any
 
 import aiohttp
 import voluptuous as vol
-from whirlpool.appliancesmanager import AppliancesManager
+# Smart Beer only uses the HTTP API; the combined manager would also try AWS IoT,
+# which fails (and logs errors) on accounts without AWS IoT appliances.
+from whirlpool.httpapi.appliancesmanager import AppliancesManager
 from whirlpool.auth import AccountLockedError, Auth
 from whirlpool.backendselector import BackendSelector
 from whirlpool.types import Brand, Region
@@ -63,7 +65,7 @@ async def validate_input(
     
     # Try to fetch appliances to verify account has Smart Beer devices
     try:
-        appliances_manager = AppliancesManager(backend_selector, auth, session)
+        appliances_manager = AppliancesManager(backend_selector, auth, session, lambda: None)
         if not await appliances_manager.connect():
             return "cannot_connect", None
         refrigerators = list(appliances_manager.refrigerators)
