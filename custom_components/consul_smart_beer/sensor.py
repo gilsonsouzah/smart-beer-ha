@@ -99,7 +99,7 @@ SENSOR_DESCRIPTIONS: tuple[SmartBeerSensorEntityDescription, ...] = (
     SmartBeerSensorEntityDescription(
         key="volume",
         translation_key="volume",
-        device_class=SensorDeviceClass.VOLUME,
+        device_class=SensorDeviceClass.VOLUME_STORAGE,
         native_unit_of_measurement=UnitOfVolume.LITERS,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:cup-water",
