@@ -1,5 +1,5 @@
 # Requirements for development
-whirlpool-sixth-sense>=2.1.0
+whirlpool-sixth-sense>=2.0.0
 homeassistant>=2024.1.0
 pytest>=7.0
 pytest-asyncio>=0.21

@@ -1,2 +1,2 @@
 # Runtime requirements
-whirlpool-sixth-sense>=2.1.0
+whirlpool-sixth-sense>=2.0.0
